@@ -1,18 +1,45 @@
 package Tree;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
 
-public class PreorderTraversal {
+public class PreorderTraversal implements TreeTraverse {
+    @Override
+    public void traverseRecursively(TreeNode root, List<Integer> res) {
+        if(root == null) return;
+        res.add(root.val);
+        traverseRecursively(root.left, res);
+        traverseRecursively(root.right, res);
+    }
 
-    public static void preOrderIterativeWithParent(TreeNode root, List<Integer> res) {
+    @Override
+    public void traverseIterativelyWithStack(TreeNode root, List<Integer> res) {
+        if(root == null) return;
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        stack.push(root);
+        while(!stack.isEmpty()) {
+            TreeNode cur = stack.poll();
+            if(cur.right != null) {
+                stack.push(cur.right);
+            }
+            if(cur.left != null) {
+                stack.push(cur.left);
+            }
+            res.add(cur.val);
+        }
+    }
+
+    @Override
+    public void traverseIterativelyWithParent(TreeNode root, List<Integer> res) {
         TreeNode cur = root;
         while(cur != null) {
             res.add(cur.val);
             cur = nextNode(cur);
         }
     }
-    // with parent pointer
-    public static TreeNode nextNode(TreeNode cur) {
+
+    private TreeNode nextNode(TreeNode cur) {
         if(cur.left != null) {
             return cur.left;
         }
@@ -28,12 +55,4 @@ public class PreorderTraversal {
         }
         return cur.parent.right;
     }
-
-    public static void preorderRecursion(TreeNode root, List<Integer> res) {
-        if(root == null) return;
-        res.add(root.val);
-        preorderRecursion(root.left, res);
-        preorderRecursion(root.right, res);
-    }
-
 }

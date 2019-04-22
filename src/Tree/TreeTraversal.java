@@ -16,13 +16,26 @@ public class TreeTraversal {
      */
     public static void main(String[] args) {
         TreeNode root = buildExampleTree();
-        inorderTraversal(root);
-        preorderTraversal(root);
+//        System.out.println("Inorder Traversal:");
+//        inorderTraversal(root);
+//        System.out.println("\nPreorder Traversal:");
+//        preorderTraversal(root);
+        postorderTraversal(root);
     }
 
+    private static void postorderTraversal(TreeNode root) {
+        List<Integer> postOrder = new ArrayList<>();
+        PostorderTraversal postorderTraversal = new PostorderTraversal();
+        postorderTraversal.traverseIterativelyWithStack(root, postOrder);
+        for(int i : postOrder) {
+            System.out.print(i);
+            System.out.print(" ");
+        }
+    }
     private static void preorderTraversal(TreeNode root) {
         List<Integer> preOrder = new ArrayList<>();
-        PreorderTraversal.preOrderIterativeWithParent(root, preOrder);
+        PreorderTraversal preorderTraversal = new PreorderTraversal();
+        preorderTraversal.traverseIterativelyWithStack(root, preOrder);
         for(int i : preOrder) {
             System.out.print(i);
             System.out.print(" ");
@@ -30,7 +43,8 @@ public class TreeTraversal {
     }
     private static void inorderTraversal(TreeNode root) {
         List<Integer> inorder = new ArrayList<>();
-        InorderTraversal.InorderRecursion(root, inorder);
+        InorderTraversal inorderTraversal = new InorderTraversal();
+        inorderTraversal.traverseRecursively(root, inorder);
         for(int i : inorder) {
             System.out.print(i);
             System.out.print(" ");
